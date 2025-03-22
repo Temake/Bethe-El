@@ -10,7 +10,7 @@ type AuthContextType = {
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
-  signup: (name: string, email: string,phone_number:Text, password: string) => Promise<{ isNewAccount: boolean } | null>;
+  signup: (name: string, email: string,phone_number:string, password: string) => Promise<{ isNewAccount: boolean } | null>;
   logout: () => void;
 };
 
@@ -135,7 +135,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const signup = async (name: string, email: string,phone_number:Text, password: string) => {
+  const signup = async (name: string, email: string,phone_number:string, password: string) => {
     setIsLoading(true);
     setError(null);
 

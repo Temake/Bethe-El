@@ -51,7 +51,7 @@ export default function Login() {
 
   const onSignupSubmit = async (data: SignupFormValues) => {
     setIsSubmitting(true);
-    const result = await signup(data.name, data.email, data.password);
+    const result = await signup(data.name, data.email,data.phone_number,data.password);
     setIsSubmitting(false);
 
     if (result === null) {
