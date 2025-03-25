@@ -73,7 +73,7 @@ export default function Login() {
       <Card className="w-full max-w-md mx-auto rounded-xl shadow-lg animate-scale-in border">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-semibold tracking-tight text-center">
-            Welcome to Bethel
+            Welcome to Trakka
           </CardTitle>
           <CardDescription className="text-center">
             Track your spiritual journey and maintain consistency

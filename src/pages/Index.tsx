@@ -51,7 +51,7 @@ export default function Index() {
               <div className="flex flex-col items-center text-center py-20 md:py-28 animate-fade-in">
                 <div className="space-y-4 max-w-3xl">
                   <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-                    Track Your Spiritual Journey with <span className="text-primary">Bethel</span>
+                    Track Your Spiritual Journey with <span className="text-primary">Trakka</span>
                   </h1>
                   <p className="text-xl text-muted-foreground md:text-2xl max-w-2xl mx-auto">
                     Build consistency in your spiritual life by documenting prayers, 
@@ -113,7 +113,7 @@ export default function Index() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
                 <div className="font-display text-xl font-semibold flex items-center">
-                  <span className="bg-primary text-primary-foreground py-1 px-2 rounded mr-1">Bethel</span>
+                  <span className="bg-primary text-primary-foreground py-1 px-2 rounded mr-1">Trakka</span>
                
                 </div>
               </div>
