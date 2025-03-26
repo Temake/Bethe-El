@@ -118,7 +118,7 @@ export default function Index() {
                 </div>
               </div>
               <div className="flex flex-col md:flex-row gap-4 md:items-center text-sm text-muted-foreground">
-                <p>© 2025 Bethel. All rights reserved.</p>
+                <p>© 2025 Trakka. All rights reserved.</p>
                 <div className="flex gap-4 justify-center">
                   <Link to="#" className="hover:text-foreground transition-colors">Privacy</Link>
                   <Link to="#" className="hover:text-foreground transition-colors">Terms</Link>
