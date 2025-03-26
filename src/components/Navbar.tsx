@@ -102,7 +102,7 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent className="flex flex-col">
               <div className="flex items-center justify-between mb-6">
-                <div className="font-display text-xl font-semibold">Bethel Tracker</div>
+                <div className="font-display text-xl font-semibold">Trakka</div>
                 <SheetClose asChild>
                   <Button variant="ghost" size="icon">
                     <X className="h-5 w-5" />

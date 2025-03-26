@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -97,7 +96,7 @@ export default function Index() {
               <div className="bg-card rounded-xl p-8 md:p-12 shadow-md border text-center">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-                  Join Soul Tracker today and build a consistent spiritual practice that will transform your relationship with God.
+                  Join Trakka today and build a consistent spiritual practice that will transform your relationship with God.
                 </p>
                 <Button size="lg" asChild className="font-medium px-8">
                   <Link to="/login?signup=true">Create Your Account</Link>
