@@ -81,7 +81,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
             <FormItem>
               <FormLabel>Whatsapp Number</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your valid Whatsapp Number" {...field} />
+                <Input placeholder="Enter your valid Whatsapp Number in this Format +234...." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
