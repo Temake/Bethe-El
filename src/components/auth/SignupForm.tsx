@@ -1,9 +1,8 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { UserPlus } from "lucide-react";
+import { UserPlus, Eye, EyeOff } from "lucide-react"; // Import icons
 import {
   Form,
   FormControl,
@@ -15,16 +14,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-const signupSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  phone_number:z.string().min(11,{message:"Please Enter a Valid Whatsapp NUmber"}),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
-  confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters" }),
-}).refine(data => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const signupSchema = z
+  .object({
+    name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+    email: z.string().email({ message: "Please enter a valid email address" }),
+    phone_number: z
+      .string()
+      .min(11, { message: "Please Enter a Valid Whatsapp Number" }),
+    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+    confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export type SignupFormValues = z.infer<typeof signupSchema>;
 
@@ -39,11 +42,14 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
     defaultValues: {
       name: "",
       email: "",
-      phone_number:"",
+      phone_number: "",
       password: "",
       confirmPassword: "",
     },
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <Form {...form}>
@@ -74,19 +80,23 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
             </FormItem>
           )}
         />
-          <FormField
+        <FormField
           control={form.control}
           name="phone_number"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Whatsapp Number</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your valid Whatsapp Number in this Format +234...." {...field} />
+                <Input
+                  placeholder="Valid Whatsapp Number in this Format +2347000000000"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        {/* Password Field with Eye Icon */}
         <FormField
           control={form.control}
           name="password"
@@ -94,12 +104,27 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Create a password" {...field} type="password" />
+                <div className="relative">
+                  <Input
+                    placeholder="Create a password"
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        {/* Confirm Password Field with Eye Icon */}
         <FormField
           control={form.control}
           name="confirmPassword"
@@ -107,20 +132,28 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input placeholder="Confirm your password" {...field} type="password" />
+                <div className="relative">
+                  <Input
+                    placeholder="Confirm your password"
+                    {...field}
+                    type={showConfirmPassword ? "text" : "password"}
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                  >
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? (
-            "Creating account..."
-          ) : (
-            <>
-              <UserPlus className="mr-2 h-4 w-4" /> Create Account
-            </>
-          )}
+          {isSubmitting ? "Creating account..." : <><UserPlus className="mr-2 h-4 w-4" /> Create Account</>}
         </Button>
       </form>
     </Form>
