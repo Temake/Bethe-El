@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { LogIn, Eye, EyeOff } from "lucide-react"; // Import eye icons
+import { LogIn, Eye, EyeOff } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -16,7 +16,9 @@ import { Button } from "@/components/ui/button";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" }),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
@@ -40,7 +42,6 @@ export const LoginForm = ({ onSubmit, isSubmitting }: LoginFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {/* Email Field */}
         <FormField
           control={form.control}
           name="email"
@@ -54,13 +55,21 @@ export const LoginForm = ({ onSubmit, isSubmitting }: LoginFormProps) => {
             </FormItem>
           )}
         />
-        {/* Password Field with Eye Icon */}
+
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <div className="flex justify-between items-center">
+                <FormLabel>Password</FormLabel>
+                <a
+                  href="/forgot-password"
+                  className="text-sm text-black hover:underline"
+                >
+                  Forgot Password?
+                </a>
+              </div>
               <FormControl>
                 <div className="relative">
                   <Input
@@ -84,7 +93,13 @@ export const LoginForm = ({ onSubmit, isSubmitting }: LoginFormProps) => {
         />
         {/* Submit Button */}
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Signing in..." : <><LogIn className="mr-2 h-4 w-4" /> Sign In</>}
+          {isSubmitting ? (
+            "Signing in..."
+          ) : (
+            <>
+              <LogIn className="mr-2 h-4 w-4" /> Sign In
+            </>
+          )}
         </Button>
       </form>
     </Form>

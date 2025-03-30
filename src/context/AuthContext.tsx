@@ -12,6 +12,8 @@ type AuthContextType = {
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string,phone_number:string, password: string) => Promise<{ isNewAccount: boolean } | null>;
   logout: () => void;
+  resetPassword: (email: string) => Promise<void>;
+  updatePassword: (password: string) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -44,7 +46,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUser({
             id,
             name: user_metadata.name || email?.split('@')[0] || 'User',
-            email: email || ''
+            email: email || '',
+            phone_number: user_metadata.phone_number || ''
           });
           setIsAuthenticated(true);
         } else {
@@ -92,7 +95,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUser({
             id,
             name: user_metadata.name || email?.split('@')[0] || 'User',
-            email: email || ''
+            email: email || '',
+            phone_number: user_metadata.phone_number || ''
           });
           setIsAuthenticated(true);
         } else {
@@ -194,6 +198,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const resetPassword = async (email: string) => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      toast.success("Password reset instructions have been sent to your email");
+    } catch (err: any) {
+      console.error('Reset password error:', err);
+      setError(err.message);
+      toast.error(err.message || "Failed to send reset instructions");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updatePassword = async (password: string) => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: password
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      toast.success("Password has been updated successfully");
+      navigate('/login');
+    } catch (err: any) {
+      console.error('Update password error:', err);
+      setError(err.message);
+      toast.error(err.message || "Failed to update password");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -203,7 +254,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         error,
         login,
         signup,
-        logout
+        logout,
+        resetPassword,
+        updatePassword
       }}
     >
       {children}

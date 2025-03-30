@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { JournalEntry, Streak } from "@/lib/types";
 import { toast } from "sonner";
@@ -13,62 +12,52 @@ export function useCheckIn(
 ) {
   const [isCheckedInToday, setIsCheckedInToday] = useState(false);
 
-  // Check if already checked in today
-  useEffect(() => {
-    const checkDbForTodayCheckIn = async () => {
-      if (!userId) return;
-      
-      const today = new Date().toISOString().split('T')[0];
-      
-      try {
-        const { data, error } = await supabase
-          .from('check_ins')
-          .select()
-          .eq('user_id', userId)
-          .eq('check_in_date', today);
-        
-        if (error) {
-          console.error("Error checking for today's check-in:", error);
-          return;
-        }
-        
-        setIsCheckedInToday(data && data.length > 0);
-      } catch (error) {
-        console.error("Error in checkDbForTodayCheckIn:", error);
-      }
-    };
-    
-    checkDbForTodayCheckIn();
-  }, [userId, journalEntries]);
+  const fetchTodayCheckIn = async () => {
+    if (!userId) return false;
 
-  const checkIsCheckedInToday = async () => {
-    if (!userId) return;
-    
     const today = new Date().toISOString().split('T')[0];
-    
+
     try {
       const { data, error } = await supabase
         .from('check_ins')
         .select()
         .eq('user_id', userId)
         .eq('check_in_date', today);
-      
+
       if (error) {
         console.error("Error checking for today's check-in:", error);
-        return;
+        toast.error("Failed to verify today's check-in. Please try again.");
+        return false;
       }
-      
-      setIsCheckedInToday(data && data.length > 0);
+
+      return data && data.length > 0;
     } catch (error) {
-      console.error("Error in checkIsCheckedInToday:", error);
+      console.error("Error in fetchTodayCheckIn:", error);
+      toast.error("An unexpected error occurred. Please try again.");
+      return false;
     }
+  };
+
+  // Check if already checked in today
+  useEffect(() => {
+    const checkDbForTodayCheckIn = async () => {
+      const isCheckedIn = await fetchTodayCheckIn();
+      setIsCheckedInToday(isCheckedIn);
+    };
+
+    checkDbForTodayCheckIn();
+  }, [userId]);
+
+  const checkIsCheckedInToday = async () => {
+    const isCheckedIn = await fetchTodayCheckIn();
+    setIsCheckedInToday(isCheckedIn);
   };
 
   const checkIn = async () => {
     if (!userId) return;
-    
+
     const today = new Date().toISOString().split('T')[0];
-    
+
     // Prevent multiple check-ins on the same day
     if (isCheckedInToday) {
       toast.info("You've already checked in today!");
@@ -90,16 +79,16 @@ export function useCheckIn(
           user_id: userId,
           check_in_date: today
         });
-      
+
       if (checkInError) throw checkInError;
-      
+
       // Update streak
       const streakUpdated = await incrementStreak(userId);
       setIsCheckedInToday(true);
-      
+
       // Create a checked-in entry for today if it doesn't exist
       const todayEntry = journalEntries.find(entry => entry.date === today);
-      
+
       if (!todayEntry) {
         const { data, error } = await supabase
           .from('journal_entries')
@@ -111,9 +100,9 @@ export function useCheckIn(
           })
           .select()
           .single();
-        
+
         if (error) throw error;
-        
+
         if (data) {
           const newEntry: JournalEntry = {
             id: data.id,
@@ -124,11 +113,11 @@ export function useCheckIn(
             createdAt: data.created_at,
             isCheckedIn: true
           };
-          
+
           setJournalEntries(prev => [...prev, newEntry]);
         }
       }
-      
+
       if (streakUpdated) {
         toast.success(`Checked in! Current streak: ${streak.current + 1} day${streak.current + 1 !== 1 ? 's' : ''}`);
       } else {
