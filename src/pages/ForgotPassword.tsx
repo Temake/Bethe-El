@@ -40,7 +40,7 @@ export default function ForgotPassword() {
             Reset Password
           </CardTitle>
           <CardDescription className="text-center">
-            Enter your email address and we'll send you instructions to reset your password
+            Enter your email address and we'll send you a Link to reset your password
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -70,10 +70,10 @@ export default function ForgotPassword() {
               <div className="flex flex-col gap-4">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? (
-                    "Sending instructions..."
+                    "Sending Reset Link..."
                   ) : (
                     <>
-                      <Mail className="mr-2 h-4 w-4" /> Send Reset Instructions
+                      <Mail className="mr-2 h-4 w-4" /> Send Reset Link
                     </>
                   )}
                 </Button>

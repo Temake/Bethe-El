@@ -37,7 +37,7 @@ export default function Login() {
   }, [location]);
 
   useEffect(() => {
-    // Redirect if already authenticated
+
     if (isAuthenticated) {
       navigate("/dashboard");
     }
