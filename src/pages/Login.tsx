@@ -18,7 +18,7 @@ export default function Login() {
   const location = useLocation();
 
   useEffect(() => {
-    // Check if URL has signup parameter or email confirmation hash
+   
     const params = new URLSearchParams(location.search);
     if (params.get("signup") === "true") {
       setActiveTab("signup");
@@ -51,7 +51,7 @@ export default function Login() {
 
   const onSignupSubmit = async (data: SignupFormValues) => {
     setIsSubmitting(true);
-    const result = await signup(data.name, data.email,data.phone_number,data.password);
+    const result = await signup(data.name, data.email,data.password,data.phone);
     setIsSubmitting(false);
 
     if (result === null) {

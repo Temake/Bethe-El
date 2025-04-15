@@ -18,9 +18,9 @@ const signupSchema = z
   .object({
     name: z.string().min(2, { message: "Name must be at least 2 characters" }),
     email: z.string().email({ message: "Please enter a valid email address" }),
-    phone_number: z
+    phone: z
       .string()
-      .min(11, { message: "Please Enter a Valid Whatsapp Number" }),
+      .min(10, { message: "Please Enter a Valid Whatsapp Number" }),
     password: z.string().min(6, { message: "Password must be at least 6 characters" }),
     confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters" }),
   })
@@ -42,7 +42,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
     defaultValues: {
       name: "",
       email: "",
-      phone_number: "",
+      phone: "",
       password: "",
       confirmPassword: "",
     },
@@ -82,7 +82,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
         />
         <FormField
           control={form.control}
-          name="phone_number"
+          name="phone"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Whatsapp Number</FormLabel>
