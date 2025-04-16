@@ -1,12 +1,3 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | Text
-  | { [key: string]: Json | undefined }
-  | Json[]
-
 export type Database = {
   public: {
     Tables: {
@@ -82,19 +73,19 @@ export type Database = {
           created_at: string
           id: string
           name: string | null
-          phone:string | null
+          phone: string | null
         }
         Insert: {
           created_at?: string
           id: string
           name?: string | null
-          phone?:string | null
+          phone?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           name?: string | null
-          phone?:string | null
+          phone?: string | null
         }
         Relationships: []
       }
@@ -136,6 +127,41 @@ export type Database = {
           },
         ]
       }
+      book_reviews: {
+        Row: {
+          id: string
+          user_id: string
+          review_text: string
+          date: string 
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          review_text: string | null
+          date: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          review_text?: string
+          date?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "book_reviews_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -171,8 +197,7 @@ export type Tables<
     : never
   : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
         PublicSchema["Views"])
-    ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+    ? (PublicSchema["Tables"] & PublicSchema["Views"])[PublicTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
