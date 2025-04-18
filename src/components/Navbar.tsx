@@ -10,6 +10,7 @@ import {
   LogOut, 
   Menu, 
   User, 
+  BookOpen,
   X 
 } from "lucide-react";
 import {
@@ -30,6 +31,7 @@ const Navbar = () => {
     { name: "Home", path: "/", icon: <Home className="w-5 h-5" /> },
     { name: "Dashboard", path: "/dashboard", icon: <Home className="w-5 h-5" /> },
     { name: "Journal", path: "/journal", icon: <Book className="w-5 h-5" /> },
+    { name: "Book Review", path: "/book-review", icon: <BookOpen className="w-5 h-5" /> },
     { name: "Profile", path: "/profile", icon: <User className="w-5 h-5" /> },
   ];
 

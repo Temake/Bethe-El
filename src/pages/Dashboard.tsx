@@ -1,6 +1,5 @@
-
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { useUserData } from "@/context/UserDataContext";
 import CheckInButton from "@/components/CheckInButton";
@@ -10,15 +9,15 @@ import Navbar from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { CalendarIcon, BookText } from "lucide-react";
+import { CalendarIcon, BookText, BookOpen } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
   const { isAuthenticated, user } = useAuth();
   const { journalEntries } = useUserData();
   const navigate = useNavigate();
 
-  // Redirect if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/login");
@@ -116,6 +115,25 @@ export default function Dashboard() {
                       <p className="text-muted-foreground">No journal entries yet</p>
                     </div>
                   )}
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-sm transition-all duration-300 hover:shadow-md">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg flex items-center">
+                    <BookOpen className="h-5 w-5 mr-2" />
+                    Book Review Journal
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <p className="text-sm text-muted-foreground">
+                      Record what you learned from your reading today
+                    </p>
+                    <Button asChild>
+                      <Link to="/book-review">Go to Book Review</Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </div>

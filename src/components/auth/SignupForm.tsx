@@ -85,10 +85,10 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Whatsapp Number</FormLabel>
+              <FormLabel>Whatsapp Number(Valid Whatsapp Number in this Format)</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Valid Whatsapp Number in this Format +2347000000000"
+                  placeholder="2347000000000"
                   {...field}
                 />
               </FormControl>
@@ -108,7 +108,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
                   <Input
                     placeholder="Create a password"
                     {...field}
-                    type={showPassword ? "text" : "password"}
+                   type={showPassword ? "text" : "password"}
                     className="pr-10"
                   />
                   <button
@@ -116,7 +116,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                   >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
                   </button>
                 </div>
               </FormControl>
@@ -124,7 +124,6 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
             </FormItem>
           )}
         />
-        {/* Confirm Password Field with Eye Icon */}
         <FormField
           control={form.control}
           name="confirmPassword"
@@ -136,7 +135,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
                   <Input
                     placeholder="Confirm your password"
                     {...field}
-                    type={showConfirmPassword ? "text" : "password"}
+                    type={showConfirmPassword ? "text":"password"}
                     className="pr-10"
                   />
                   <button
@@ -144,7 +143,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                   >
-                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    {showConfirmPassword ? <Eye size={18} /> :<EyeOff size={18} /> }
                   </button>
                 </div>
               </FormControl>

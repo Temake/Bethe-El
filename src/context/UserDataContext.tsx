@@ -70,10 +70,10 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({
             current: data.current_streak,
             longest: data.longest_streak,
             lastCheckIn: data.last_check_in,
-            freezesAvailable: 3 // This value is not stored in the database yet
+            freezesAvailable: 3 
           });
         } else {
-          // If no streak data exists yet, create it
+          
           try {
             await supabase
               .from('streak_data')
