@@ -85,7 +85,7 @@ export const SignupForm = ({ onSubmit, isSubmitting }: SignupFormProps) => {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Whatsapp Number(Valid Whatsapp Number in this Format)</FormLabel>
+              <FormLabel>Whatsapp Number (Format: Country Code + Number, e.g., 2347000000000)</FormLabel>
               <FormControl>
                 <Input
                   placeholder="2347000000000"
